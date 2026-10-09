@@ -1,3 +1,9 @@
+/* Lab 2, Step 2.4: accent color available to the whole page */
+html {
+  --color-accent: oklch(65% 50% 0);
+  accent-color: var(--color-accent);
+}
+
 body {
   /* Set line height to 1.5 times the font size
      and use the OS's UI font as the website font
@@ -14,4 +20,35 @@ img {
   width: 300px;
   max-width: 100%;
   height: auto;
+}
+
+/* Lab 2, Step 2: navigation bar */
+
+/* 2.2: lay out the links in a row with Flexbox */
+nav {
+  display: flex;
+  margin-bottom: 1em; /* 2.3: space before the content */
+  border-bottom: 1px solid oklch(80% 3% 200); /* 2.3: subtle cool-gray line */
+}
+
+nav a {
+  flex: 1; /* 2.2: every link takes the same share of space */
+  text-decoration: none; /* 2.3: no underline */
+  color: inherit; /* 2.3: same color as the surrounding text */
+  text-align: center; /* 2.3: center the text in its box */
+  padding: 0.5em; /* 2.3: breathing room around each link */
+}
+
+/* 2.3: highlight the link for the page you're on */
+nav a.current {
+  border-bottom: 0.4em solid oklch(80% 3% 200);
+  padding-bottom: 0.1em; /* 0.5em - 0.4em border, so the height stays the same */
+  font-weight: bold;
+}
+
+/* 2.4: accent color on hover */
+nav a:hover {
+  border-bottom: 0.4em solid var(--color-accent);
+  padding-bottom: 0.1em;
+  background-color: oklch(from var(--color-accent) 95% 5% h);
 }

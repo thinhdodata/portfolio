@@ -80,3 +80,43 @@ form label {
 form button {
   grid-column: 1 / -1;
 }
+
+/* Lab 2, Step 4: projects page */
+
+/* 4.2: responsive grid, as many columns as fit, each at least 15em wide */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 1em;
+}
+
+/* 4.3: each project uses 3 rows of the parent grid, so headings,
+   images and text line up across a row of projects */
+.projects article {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+}
+
+.projects h2 {
+  margin: 0; /* remove the default heading space */
+}
+
+.projects img {
+  width: 100%; /* image fills its card */
+}
+
+/* 4.4: clear hierarchy, headings look different from body text */
+h1 {
+  font-size: 400%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.1; /* tighter than body text */
+  text-wrap: balance; /* avoid one lonely word on the last line */
+}

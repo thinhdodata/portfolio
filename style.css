@@ -98,8 +98,9 @@ form button {
   grid-row: span 3;
 }
 
-.projects h2 {
-  margin: 0; /* remove the default heading space */
+.projects h2,
+.projects p {
+  margin: 0; /* remove default spacing, the grid gap handles it */
 }
 
 .projects img {
@@ -119,4 +120,71 @@ h5,
 h6 {
   line-height: 1.1; /* tighter than body text */
   text-wrap: balance; /* avoid one lonely word on the last line */
+}
+
+/* Lab 2, Step 5: style the CV (resume page) */
+
+/* contact line under the name: smaller and gray */
+body > header p {
+  margin-top: 0.5em;
+  color: oklch(45% 3% 200);
+}
+
+/* space between the main sections */
+section {
+  margin-block: 2.5em;
+}
+
+/* section titles: accent color with a thin line underneath (like the nav) */
+section h2 {
+  color: var(--color-accent);
+  border-bottom: 1px solid oklch(80% 3% 200);
+  padding-bottom: 0.25em;
+  margin-bottom: 0.75em;
+}
+
+/* each job / school / project entry */
+section article {
+  margin-bottom: 1.5em;
+}
+
+/* title on the left, dates on the right (Flexbox, like Step 2);
+   wraps onto two lines on narrow screens */
+section article header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0 1em;
+}
+
+section article h3,
+section article header p {
+  margin: 0;
+}
+
+section article header p {
+  color: oklch(45% 3% 200);
+  font-size: 90%;
+}
+
+/* bullet lists */
+section ul {
+  margin-block: 0.5em;
+  padding-left: 1.25em;
+}
+
+section li {
+  margin-bottom: 0.25em;
+}
+
+section li::marker {
+  color: var(--color-accent); /* pink bullets */
+}
+
+/* Skills list: responsive columns (Grid, like Steps 3 and 4) */
+section > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+  gap: 0.25em 2em;
 }

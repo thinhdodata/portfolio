@@ -4,12 +4,6 @@ function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
 
-console.log("IT’S ALIVE!");
-
-function $$(selector, context = document) {
-  return Array.from(context.querySelectorAll(selector));
-}
-
 // Step 2: highlight the current page link automatically
 let navLinks = $$("nav a");
 

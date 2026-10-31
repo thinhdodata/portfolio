@@ -4,6 +4,7 @@ html {
 
   --color-accent: oklch(65% 50% 0);
   --border-color: oklch(50% 10% 200 / 40%);
+}
 
 body {
   /* Set line height to 1.5 times the font size
@@ -29,7 +30,8 @@ img {
 nav {
   display: flex;
   margin-bottom: 1em; /* 2.3: space before the content */
-  border-bottom: 1px solid var(--border-color);}
+  border-bottom: 1px solid var(--border-color);
+}
 
 nav a {
   flex: 1; /* 2.2: every link takes the same share of space */
@@ -58,7 +60,7 @@ nav a:hover {
 /* 3.1: form controls use the same font as the rest of the page */
 input,
 textarea,
-button, 
+button,
 select {
   font: inherit;
 }
@@ -192,7 +194,7 @@ section > ul {
 
 .color-scheme {
   position: absolute;
-  top: 0.10rem;
+  top: 0.1rem;
   right: 1rem;
   font-size: 80%;
 }
@@ -217,4 +219,60 @@ section > ul {
   margin: 0;
   font-size: 2em;
   font-weight: bold;
+}
+
+#projects-pie-plot {
+  max-width: 20em;
+  margin-block: 2em;
+  overflow: visible;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 0.5em;
+  list-style: none;
+  padding: 0;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.swatch {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  background: var(--color);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+.container .legend {
+  flex: 1;
+}
+
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+#projects-pie-plot path {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+path.selected {
+  fill: oklch(60% 45% 0);
+}
+
+.legend li.selected {
+  font-weight: bold;
+  text-decoration: underline;
 }

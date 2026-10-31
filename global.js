@@ -112,9 +112,13 @@ export async function fetchJSON(url) {
 }
 
 // Lab 4, Step 1.4: render a list of projects into a container
-export function renderProjects(projects, containerElement, headingLevel = "h2") {
+export function renderProjects(
+  projects,
+  containerElement,
+  headingLevel = "h2",
+) {
   if (!containerElement) return;
-  containerElement.innerHTML = "";
+  containerElement.innerHTML = ""; // think about it
 
   const validHeadings = ["h1", "h2", "h3", "h4", "h5", "h6"];
   if (!validHeadings.includes(headingLevel)) headingLevel = "h2";

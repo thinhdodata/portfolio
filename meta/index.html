@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meta | Thinh Duy Do</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script type="module" src="../global.js"></script>
+    <script type="module" src="main.js"></script>
+  </head>
+  <body>
+    <h1>Meta</h1>
+    <p>
+      Lines of code and commit history for this site, generated with elocuent
+      and visualized with D3.
+    </p>
+
+    <dl id="stats" class="stats"></dl>
+
+    <h2>Commits by time of day and date</h2>
+    <svg id="chart"></svg>
+
+    <dl id="commit-tooltip" class="info" hidden>
+      <dt>Commit</dt>
+      <dd><a id="tt-link" target="_blank"></a></dd>
+      <dt>Date</dt>
+      <dd id="tt-date"></dd>
+      <dt>Time</dt>
+      <dd id="tt-time"></dd>
+      <dt>Author</dt>
+      <dd id="tt-author"></dd>
+      <dt>Lines edited</dt>
+      <dd id="tt-lines"></dd>
+    </dl>
+
+    <h2>Selected commits</h2>
+    <p id="selection-count"></p>
+    <div id="language-breakdown"></div>
+  </body>
+</html>

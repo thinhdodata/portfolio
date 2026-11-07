@@ -276,3 +276,105 @@ path.selected {
   font-weight: bold;
   text-decoration: underline;
 }
+
+/* Lab 6: meta page */
+#stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10em, 1fr));
+  gap: 1em;
+  text-align: center;
+  margin: 1em 0;
+}
+
+#stats dt {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+#stats dd {
+  margin: 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+#chart {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+#chart .gridlines line {
+  stroke: var(--border-color);
+  stroke-opacity: 0.5;
+}
+
+#chart .gridlines .domain {
+  display: none;
+}
+
+#chart .dots circle {
+  fill-opacity: 0.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: 200ms;
+}
+
+#chart .dots circle:hover {
+  fill-opacity: 1;
+  transform: scale(1.5);
+}
+
+#chart .dots circle.selected {
+  fill: oklch(60% 45% 0);
+}
+
+#chart .brush .selection {
+  fill-opacity: 0.1;
+  stroke: var(--color-accent);
+}
+
+.info {
+  position: fixed;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25em 1em;
+  margin: 0;
+  padding: 0.5em 1em;
+  background: canvas;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.info[hidden] {
+  display: none;
+}
+
+.info dt {
+  font-weight: bold;
+}
+
+.info dd {
+  margin: 0;
+}
+
+.breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+  gap: 0.5em 1em;
+  margin: 0;
+}
+
+.breakdown div {
+  display: flex;
+  gap: 0.5em;
+}
+
+.breakdown dt {
+  font-weight: bold;
+}
+
+.breakdown dd {
+  margin: 0;
+}

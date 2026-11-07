@@ -42,6 +42,9 @@ function hourFraction(time) {
 
 const data = await d3.csv("loc.csv", rowConverter);
 
+// every commit in the repo, generated with: git log --format=%h,%aI
+const allCommits = await d3.csv("commits.csv");
+
 // Step 1.2: group lines by commit and build a commits array
 const commits = d3.groups(data, (d) => d.commit).map(([id, lines]) => {
   let first = lines[0];
@@ -71,8 +74,9 @@ const busiest = d3.greatest(
 
 document.querySelector("#stats").innerHTML = `
   <div><dt>Total lines</dt><dd>${data.length}</dd></div>
-  <div><dt>Total commits</dt><dd>${commits.length}</dd></div>
-  <div><dt>Files</dt><dd>${new Set(data.map((d) => d.file)).size}</dd></div>
+  <div><dt>Total commits</dt><dd>${allCommits.length}</dd></div>
+  <div><dt>Commits with live code</dt><dd>${commits.length}</dd></div>
+  <div><dt>Code files</dt><dd>${new Set(data.map((d) => d.file)).size}</dd></div>
   <div><dt>Avg lines per commit</dt><dd>${Math.round(d3.mean(commits, (d) => d.totalLines))}</dd></div>
   <div><dt>Busiest hour</dt><dd>${String(busiest[0]).padStart(2, "0")}:00</dd></div>
 `;
@@ -155,7 +159,7 @@ const dots = svg
   .attr("r", (d) => rScale(d.totalLines))
   .attr("fill", (d) => colorScale(d.hourFrac));
 
-// Step 3: tooltip
+// Step 3: tooltip (lines = lines from this commit still in the code)
 const tooltip = document.querySelector("#commit-tooltip");
 
 function updateTooltipVisibility(isVisible) {

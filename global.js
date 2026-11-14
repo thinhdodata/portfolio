@@ -1,10 +1,10 @@
+
 console.log("IT’S ALIVE!");
 
 function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
 
-// Step 3: build the nav menu automatically
 let pages = [
   { url: "", title: "Home" },
   { url: "projects/", title: "Projects" },
@@ -45,7 +45,6 @@ for (let p of pages) {
   }
 }
 
-// Step 4: theme switcher
 document.body.insertAdjacentHTML(
   "afterbegin",
   `
@@ -76,53 +75,51 @@ select.addEventListener("input", function (event) {
   localStorage.colorScheme = event.target.value;
 });
 
-// Step 5: better contact form
 let form = document.querySelector("form");
 
 form?.addEventListener("submit", function (event) {
-  // stop the browser's default (it would turn spaces into +)
   event.preventDefault();
 
   let data = new FormData(form);
   let params = [];
 
   for (let [name, value] of data) {
-    // encode properly: spaces become %20, not +
     params.push(`${name}=${encodeURIComponent(value)}`);
   }
 
   let url = form.action + "?" + params.join("&");
   console.log(url);
-
-  // open the email app with the clean link
   location.href = url;
 });
 
-// Lab 4, Step 1.2: load JSON data from a URL
 export async function fetchJSON(url) {
   try {
     const response = await fetch(url);
+
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.statusText}`);
     }
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     console.error("Error fetching or parsing JSON data:", error);
   }
 }
 
-// Lab 4, Step 1.4: render a list of projects into a container
 export function renderProjects(
   projects,
   containerElement,
   headingLevel = "h2",
 ) {
   if (!containerElement) return;
-  containerElement.innerHTML = ""; // think about it
+
+  containerElement.innerHTML = "";
 
   const validHeadings = ["h1", "h2", "h3", "h4", "h5", "h6"];
-  if (!validHeadings.includes(headingLevel)) headingLevel = "h2";
+
+  if (!validHeadings.includes(headingLevel)) {
+    headingLevel = "h2";
+  }
 
   if (!projects || projects.length === 0) {
     containerElement.innerHTML = "<p>No projects to display.</p>";
@@ -131,16 +128,32 @@ export function renderProjects(
 
   for (const project of projects) {
     const article = document.createElement("article");
-    article.innerHTML = `
-      <${headingLevel}>${project.title}</${headingLevel}>
-      <img src="${project.image}" alt="${project.title}">
-      <p>${project.description}</p>
-    `;
+
+    const heading = document.createElement(headingLevel);
+    heading.textContent = project.title;
+
+    const img = document.createElement("img");
+    img.src = project.image;
+    img.alt = project.title;
+
+    const description = document.createElement("p");
+    description.textContent = project.description;
+
+    article.append(heading, img, description);
+
+    if (project.url) {
+      const link = document.createElement("a");
+      link.href = project.url;
+      link.textContent = "View Project";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      article.appendChild(link);
+    }
+
     containerElement.appendChild(article);
   }
 }
 
-// Lab 4, Step 3.2: fetch public GitHub profile data
 export async function fetchGitHubData(username) {
   return fetchJSON(`https://api.github.com/users/${username}`);
 }

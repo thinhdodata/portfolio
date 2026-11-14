@@ -1,74 +1,159 @@
-[
-  {
-    "title": "test",
-    "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam dolor quos, quod assumenda explicabo odio, nobis ipsa laudantium quas eum veritatis ullam sint porro minima modi molestias doloribus cumque odit."
-  },
-  {
-    "title": "Architecto minima sed omnis?",
-    "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Est, reiciendis aspernatur debitis maxime et itaque animi sit quod quo, tempore incidunt tempora dignissimos exercitationem enim numquam quam quaerat optio laborum ut unde hic delectus laboriosam."
-  },
-  {
-    "title": "Asperiores rem repellendus doloremque.",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Eligendi tenetur quae quos recusandae est. Cumque, voluptatem. Quo nihil dignissimos molestiae explicabo praesentium aspernatur debitis, illo rerum possimus quam ducimus earum nulla officiis maiores."
-  },
-  {
-    "title": "Laudantium reprehenderit placeat perspiciatis.",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Quo minus perferendis nulla corrupti, fugiat officiis illum voluptatum odio accusamus doloremque saepe quibusdam ipsa consequuntur."
-  },
-  {
-    "title": "Consequuntur autem eos facere.",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Laborum alias ea unde harum aspernatur? Similique, iure tempore dolorum commodi veniam ipsum explicabo nemo reprehenderit fugit facilis voluptas ratione."
-  },
-  {
-    "title": "Quos sint quaerat omnis?",
-    "year": "2024",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Est neque, velit nam rerum error odio voluptates voluptatem magnam laboriosam ad? Doloribus, id et itaque unde porro accusantium sequi molestiae eveniet."
-  },
-  {
-    "title": "Dolorum nesciunt vitae officia.",
-    "year": "2024",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Natus ratione voluptatibus, corporis tempora quisquam hic sapiente dolores repellat nam, accusantium sunt facere eligendi perferendis."
-  },
-  {
-    "title": "Ipsam voluptas temporibus quidem.",
-    "year": "2024",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Harum quas porro, perspiciatis reiciendis ducimus fuga deleniti dolore aliquam iusto exercitationem quidem cupiditate voluptatem sed repellendus ipsum."
-  },
-  {
-    "title": "Molestiae eum maxime ratione.",
-    "year": "2023",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Quisquam mollitia ullam, expedita repudiandae saepe accusamus nobis tenetur eius optio facere, ex odit sit illo eos asperiores."
-  },
-  {
-    "title": "Recusandae aut neque pariatur.",
-    "year": "2023",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Voluptatum dicta omnis labore, aperiam beatae quasi illum minus consequatur ab quia vel tempore nesciunt natus quos odio."
-  },
-  {
-    "title": "Velit fugiat exercitationem corrupti.",
-    "year": "2022",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Sapiente culpa magni impedit veritatis atque, blanditiis quis nostrum tenetur illum nisi voluptas eaque in aliquid vitae."
-  },
-  {
-    "title": "Nemo quibusdam magnam dicta.",
-    "year": "2022",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "Eveniet ipsa repellat obcaecati ad dolores minima fugit, laboriosam libero itaque odio delectus, error placeat incidunt."
+
+console.log("IT’S ALIVE!");
+
+function $$(selector, context = document) {
+  return Array.from(context.querySelectorAll(selector));
+}
+
+let pages = [
+  { url: "", title: "Home" },
+  { url: "projects/", title: "Projects" },
+  { url: "contact/", title: "Contact" },
+  { url: "resume/", title: "Resume" },
+  { url: "meta/", title: "Meta" },
+  { url: "https://github.com/thinhdodata", title: "GitHub" },
+];
+
+const BASE_PATH =
+  location.hostname === "localhost" || location.hostname === "127.0.0.1"
+    ? "/"
+    : "/portfolio/";
+
+let nav = document.createElement("nav");
+document.body.prepend(nav);
+
+for (let p of pages) {
+  let url = p.url;
+  let title = p.title;
+
+  if (!url.startsWith("http")) {
+    url = BASE_PATH + url;
   }
-]
+
+  let a = document.createElement("a");
+  a.href = url;
+  a.textContent = title;
+  nav.append(a);
+
+  a.classList.toggle(
+    "current",
+    a.host === location.host && a.pathname === location.pathname,
+  );
+
+  if (a.host !== location.host) {
+    a.target = "_blank";
+  }
+}
+
+document.body.insertAdjacentHTML(
+  "afterbegin",
+  `
+  <label class="color-scheme">
+    Theme:
+    <select>
+      <option value="light dark">Automatic</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>`,
+);
+
+let select = document.querySelector(".color-scheme select");
+
+function setColorScheme(colorScheme) {
+  document.documentElement.style.setProperty("color-scheme", colorScheme);
+  select.value = colorScheme;
+}
+
+if ("colorScheme" in localStorage) {
+  setColorScheme(localStorage.colorScheme);
+}
+
+select.addEventListener("input", function (event) {
+  console.log("color scheme changed to", event.target.value);
+  setColorScheme(event.target.value);
+  localStorage.colorScheme = event.target.value;
+});
+
+let form = document.querySelector("form");
+
+form?.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  let data = new FormData(form);
+  let params = [];
+
+  for (let [name, value] of data) {
+    params.push(`${name}=${encodeURIComponent(value)}`);
+  }
+
+  let url = form.action + "?" + params.join("&");
+  console.log(url);
+  location.href = url;
+});
+
+export async function fetchJSON(url) {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching or parsing JSON data:", error);
+  }
+}
+
+export function renderProjects(
+  projects,
+  containerElement,
+  headingLevel = "h2",
+) {
+  if (!containerElement) return;
+
+  containerElement.innerHTML = "";
+
+  const validHeadings = ["h1", "h2", "h3", "h4", "h5", "h6"];
+
+  if (!validHeadings.includes(headingLevel)) {
+    headingLevel = "h2";
+  }
+
+  if (!projects || projects.length === 0) {
+    containerElement.innerHTML = "<p>No projects to display.</p>";
+    return;
+  }
+
+  for (const project of projects) {
+    const article = document.createElement("article");
+
+    const heading = document.createElement(headingLevel);
+    heading.textContent = project.title;
+
+    const img = document.createElement("img");
+    img.src = project.image;
+    img.alt = project.title;
+
+    const description = document.createElement("p");
+    description.textContent = project.description;
+
+    article.append(heading, img, description);
+
+    if (project.url) {
+      const link = document.createElement("a");
+      link.href = project.url;
+      link.textContent = "View Project";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      article.appendChild(link);
+    }
+
+    containerElement.appendChild(article);
+  }
+}
+
+export async function fetchGitHubData(username) {
+  return fetchJSON(`https://api.github.com/users/${username}`);
+}

@@ -3,7 +3,7 @@
   {
     "title": "BikeWatching",
     "year": "2026",
-    "image": "https://thinhdodata.github.io/portfolio/images/bikewatching.png",
+    "image": "https://thinhdodata.github.io/portfolio/images/bikewatching_screenshot.png",
     "description": "An interactive data visualization of Boston's Bluebikes system, built with JavaScript, D3.js, and Mapbox GL JS. Visualizes bike stations, bike lanes, and trip activity with time-based filtering.",
     "url": "https://thinhdodata.github.io/bikewatching/"
   }

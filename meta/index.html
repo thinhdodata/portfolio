@@ -18,6 +18,13 @@
     <dl id="stats" class="stats"></dl>
 
     <h2>Commits by time of day and date</h2>
+
+    <label class="slider-row">
+      <span>Show commits up to:</span>
+      <input type="range" id="commit-progress" min="0" max="100" value="100" />
+      <time id="commit-time"></time>
+    </label>
+    
     <svg id="chart"></svg>
 
     <dl id="commit-tooltip" class="info" hidden>

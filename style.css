@@ -378,3 +378,9 @@ path.selected {
 .breakdown dd {
   margin: 0;
 }
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

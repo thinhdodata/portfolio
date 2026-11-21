@@ -62,6 +62,32 @@ const commits = d3.groups(data, (d) => d.commit).map(([id, lines]) => {
   return commit;
 });
 
+
+// Step 1.1: time slider
+let commitProgress = 100;
+
+const timeScale = d3.scaleTime()
+  .domain(d3.extent(commits, (d) => d.datetime))
+  .range([0, 100]);
+
+let commitMaxTime = timeScale.invert(commitProgress);
+
+const slider = document.querySelector("#commit-progress");
+const timeOutput = document.querySelector("#commit-time");
+
+function onTimeSliderChange() {
+  commitProgress = +slider.value;
+  commitMaxTime = timeScale.invert(commitProgress);
+
+  timeOutput.textContent = commitMaxTime.toLocaleString("en", {
+    dateStyle: "long",
+    timeStyle: "short",
+  });
+}
+
+slider.addEventListener("input", onTimeSliderChange);
+onTimeSliderChange();
+
 // Step 1.3: summary stats
 const busiest = d3.greatest(
   d3.rollup(

@@ -198,6 +198,10 @@ const dots = svg
   .selectAll("circle")
   .data(sortedCommits, (d) => d.id)
   .join("circle")
+  .attr("cx", (d) => xScale(d.datetime))
+  .attr("cy", (d) => yScale(d.hourFrac))
+  .attr("r", (d) => rScale(d.totalLines))
+  .attr("fill", (d) => colorScale(d.hourFrac));
 
 // Step 3: tooltip (lines = lines from this commit still in the code)
 const tooltip = document.querySelector("#commit-tooltip");

@@ -62,6 +62,9 @@ const commits = d3.groups(data, (d) => d.commit).map(([id, lines]) => {
   return commit;
 });
 
+// Step 3.2: put commits in date order (oldest first)
+commits.sort((a, b) => a.datetime - b.datetime);
+
 // Step 1.1: time slider
 let commitProgress = 100;
 
@@ -141,6 +144,30 @@ function updateFileDisplay(filteredCommits) {
   .attr("class", "loc")
   .style("--color", (d) => techColor(d.type));
 }
+
+// Step 3.2: one text block per commit in the left column
+function renderStory() {
+  d3.select("#scatter-story")
+    .selectAll("div.step")
+    .data(commits)
+    .join("div")
+    .attr("class", "step")
+    .html((d, i) => {
+      const date = d.datetime.toLocaleString("en", {
+        dateStyle: "full",
+        timeStyle: "short",
+      });
+      const fileCount = new Set(d.lines.map((l) => l.file)).size;
+      return `
+        <p>
+          On ${date}, I made
+          <a href="${d.url}" target="_blank">${i === 0 ? "my first commit" : "another commit"}</a>,
+          editing ${d.totalLines} lines across ${fileCount} files.
+        </p>`;
+    });
+}
+
+renderStory();
 
 // Step 1.3: summary stats
 const busiest = d3.greatest(

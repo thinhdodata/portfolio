@@ -127,7 +127,12 @@ function updateFileDisplay(filteredCommits) {
     });
 
   rows.select("dt code").text((d) => d.name);
-  rows.select("dd").text((d) => d.lines.length);
+  rows
+  .select("dd")
+  .selectAll("div.loc")
+  .data((d) => d.lines)
+  .join("div")
+  .attr("class", "loc");
 }
 
 // Step 1.3: summary stats

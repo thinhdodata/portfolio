@@ -115,6 +115,8 @@ function updateFileDisplay(filteredCommits) {
     .groups(lines, (d) => d.file)
     .map(([name, lines]) => ({ name, lines }));
 
+  files.sort((a, b) => b.lines.length - a.lines.length);
+  
   const rows = d3
     .select("#files")
     .selectAll("div")
@@ -125,6 +127,8 @@ function updateFileDisplay(filteredCommits) {
       row.append("dd");
       return row;
     });
+
+  rows.order();
 
   rows.select("dt code").text((d) => d.name);
   rows

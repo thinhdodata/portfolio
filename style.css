@@ -402,3 +402,17 @@ path.selected {
   grid-template-columns: subgrid;
   align-items: center;
 }
+
+#files dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em;
+  margin: 0;
+}
+
+.loc {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--color, #4a9);
+}

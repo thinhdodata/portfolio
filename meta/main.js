@@ -89,6 +89,7 @@ function onTimeSliderChange() {
 
   filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
   updateScatterPlot(filteredCommits);
+  
   updateFileDisplay(filteredCommits);
 }
 
@@ -106,7 +107,8 @@ function updateScatterPlot(data) {
     .attr("cx", (d) => xScale(d.datetime))
     .style("display", (d) => (d.datetime <= commitMaxTime ? null : "none"));
 }
-
+// Step 2.4: one color per file type (css, html, js)
+const techColor = d3.scaleOrdinal(d3.schemeTableau10);
 // Step 2.1: list of files and their line counts
 function updateFileDisplay(filteredCommits) {
   const lines = filteredCommits.flatMap((d) => d.lines);
@@ -136,7 +138,8 @@ function updateFileDisplay(filteredCommits) {
   .selectAll("div.loc")
   .data((d) => d.lines)
   .join("div")
-  .attr("class", "loc");
+  .attr("class", "loc")
+  .style("--color", (d) => techColor(d.type));
 }
 
 // Step 1.3: summary stats

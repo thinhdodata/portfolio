@@ -62,11 +62,11 @@ const commits = d3.groups(data, (d) => d.commit).map(([id, lines]) => {
   return commit;
 });
 
-
 // Step 1.1: time slider
 let commitProgress = 100;
 
-const timeScale = d3.scaleTime()
+const timeScale = d3
+  .scaleTime()
   .domain(d3.extent(commits, (d) => d.datetime))
   .range([0, 100]);
 
@@ -74,6 +74,9 @@ let commitMaxTime = timeScale.invert(commitProgress);
 
 const slider = document.querySelector("#commit-progress");
 const timeOutput = document.querySelector("#commit-time");
+
+// Step 1.2: filter commits and update the existing plot
+let filteredCommits = commits;
 
 function onTimeSliderChange() {
   commitProgress = +slider.value;
@@ -83,10 +86,25 @@ function onTimeSliderChange() {
     dateStyle: "long",
     timeStyle: "short",
   });
+
+  filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
+  updateScatterPlot(filteredCommits);
 }
 
-slider.addEventListener("input", onTimeSliderChange);
-onTimeSliderChange();
+function updateScatterPlot(data) {
+  // The x-axis follows the visible commits
+  xScale.domain(d3.extent(data, (d) => d.datetime));
+
+  // Clear and redraw the x-axis
+  const xAxisGroup = svg.select(".x-axis");
+  xAxisGroup.selectAll("*").remove();
+  xAxisGroup.call(d3.axisBottom(xScale));
+
+  // Move the existing circles and hide the ones after the slider date
+  dots
+    .attr("cx", (d) => xScale(d.datetime))
+    .style("display", (d) => (d.datetime <= commitMaxTime ? null : "none"));
+}
 
 // Step 1.3: summary stats
 const busiest = d3.greatest(
@@ -222,6 +240,7 @@ dots
 // Step 5.3: check whether a commit's point falls inside the brush box
 function isCommitSelected(commit) {
   if (!brushSelection) return false;
+  if (commit.datetime > commitMaxTime) return false; // hidden by the slider
   let [[x0, y0], [x1, y1]] = brushSelection;
   let x = xScale(commit.datetime);
   let y = yScale(commit.hourFrac);
@@ -280,3 +299,7 @@ function renderSelectionSummary() {
 }
 
 renderSelectionSummary();
+
+// Step 1.2: connect the slider and draw the initial state
+slider.addEventListener("input", onTimeSliderChange);
+onTimeSliderChange();

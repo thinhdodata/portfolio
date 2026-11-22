@@ -317,7 +317,11 @@ path.selected {
   fill-opacity: 0.5;
   transform-box: fill-box;
   transform-origin: center;
-  transition: 200ms;
+  transition: transform 200ms ease, r 300ms ease, cx 300ms ease;
+
+  @starting-style {
+    r: 0;
+  }
 }
 
 #chart .dots circle:hover {

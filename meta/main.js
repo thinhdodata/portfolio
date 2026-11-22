@@ -1,4 +1,5 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import scrollama from "https://cdn.jsdelivr.net/npm/scrollama@3/+esm";
 
 // Shared state used by the scatterplot and brushing code
 let xScale;
@@ -366,3 +367,17 @@ renderSelectionSummary();
 // Step 1.2: connect the slider and draw the initial state
 slider.addEventListener("input", onTimeSliderChange);
 onTimeSliderChange();
+// Step 3.3: move the chart to the commit the reader scrolls to
+const scroller = scrollama();
+
+function onStepEnter(response) {
+  const time = response.element.__data__.datetime;
+  slider.value = timeScale(time);
+  onTimeSliderChange();
+}
+
+scroller
+  .setup({ step: "#scrolly-1 .step", offset: 0.5 })
+  .onStepEnter(onStepEnter);
+
+window.addEventListener("resize", scroller.resize);

@@ -106,6 +106,29 @@ function updateScatterPlot(data) {
     .style("display", (d) => (d.datetime <= commitMaxTime ? null : "none"));
 }
 
+// Step 2.1: list of files and their line counts
+function updateFileDisplay(filteredCommits) {
+  const lines = filteredCommits.flatMap((d) => d.lines);
+
+  const files = d3
+    .groups(lines, (d) => d.file)
+    .map(([name, lines]) => ({ name, lines }));
+
+  const rows = d3
+    .select("#files")
+    .selectAll("div")
+    .data(files, (d) => d.name)
+    .join((enter) => {
+      const row = enter.append("div");
+      row.append("dt").append("code");
+      row.append("dd");
+      return row;
+    });
+
+  rows.select("dt code").text((d) => d.name);
+  rows.select("dd").text((d) => d.lines.length);
+}
+
 // Step 1.3: summary stats
 const busiest = d3.greatest(
   d3.rollup(

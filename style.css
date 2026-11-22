@@ -388,3 +388,17 @@ path.selected {
   align-items: center;
   gap: 1rem;
 }
+
+
+#files {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 0.5rem;
+}
+
+#files > div {
+  display: grid;
+  grid-column: span 2;
+  grid-template-columns: subgrid;
+  align-items: center;
+}

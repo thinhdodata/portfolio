@@ -89,6 +89,7 @@ function onTimeSliderChange() {
 
   filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
   updateScatterPlot(filteredCommits);
+  updateFileDisplay(filteredCommits);
 }
 
 function updateScatterPlot(data) {
